@@ -29,6 +29,11 @@ jobs:
   AMLJob:
     runs-on: ubuntu-latest
     steps:
+      # Azure login
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: '${{ secrets.AZURE_CREDENTIALS }}'
       - run: az extension add --name ml
       - name: Running azure ml job file
         run: az ml job create --file job.yaml --web --resource-group Project-G --workspace-name Project-WS
