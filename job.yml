@@ -1,0 +1,11 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+code: .
+command: python model.py --trainingdata ${{ inputs.training_data }}
+inputs:
+  training_data:
+    type: uri_file 
+    path: azureml:HAR:1 
+environment: azureml://registries/azureml/environments/sklearn-1.5/versions/14
+compute: MLops
+experiment_name: HAR_Experiment
+description: Project HAR
