@@ -2,7 +2,7 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 
 # Load your dataset
-file_path = 'HAR.csv'  # Replace with the path to your CSV file
+file_path = 'data/HAR.csv'  # Replace with the path to your CSV file
 data = pd.read_csv(file_path)
 
 # Data Quality Checks and Cleaning
