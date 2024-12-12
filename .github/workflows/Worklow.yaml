@@ -44,5 +44,27 @@ jobs:
 
     - name: Debug URI
       run: echo "Data Asset URI - ${{ env.DATA_ASSET_URI }}"
+  
+  data-preprocessing:
+    needs: data-ingestion
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+
+    - name: Install dependencies
+      run: |
+        pip install azureml-core pandas scikit-learn
+
+    - name: Run Data Preprocessing
+      env:
+        DATA_ASSET_URI: ${{ env.DATA_ASSET_URI }}
+      run: |
+        python data_preprocessing.py --input-uri $DATA_ASSET_URI
 
 
