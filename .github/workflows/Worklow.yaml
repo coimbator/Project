@@ -1,48 +1,48 @@
 name: GitHub Actions Workflow
 run-name: ${{ github.actor }} workflow with shared Azure login
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  DataIngestJob:
+  data-ingestion:
     runs-on: ubuntu-latest
+
     steps:
-      # Checkout the repository
-      - name: Clone repository code
-        uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      # Azure login (common step)
-      - name: Log in to Azure
-        uses: azure/login@v1
-        with:
-          creds: '${{ secrets.AZURE_CREDENTIALS }}'
+    - name: Install Azure CLI
+      run: |
+        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+        az extension add --name ml -y
 
-      # Set up Azure ML CLI extension (common for Azure ML tasks)
-      - name: Install Azure ML extension
-        run: |
-          az extension add -n ml -y
-          az extension update -n ml
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # Stage 1: Upload Dataset
-      - name: Upload dataset to Azure ML
-        run: |
-          az ml data create --name HAR1 \
-            --path HAR.csv \
-            --type uri_file \
-            --workspace-name Project-WS \
-            --resource-group Project-G \
-            --description "Dataset uploaded via GitHub Actions"
+    - name: Create AzureML Data Asset
+      env:
+        DATA_FILE: "data/your_dataset.csv"  # Path to your dataset in the repository
+        DATASTORE_NAME: "workspaceblobstore"  # Name of your Azure datastore
+        DATA_ASSET_NAME: "preprocessed-dataset"  # Desired name of your data asset
+      run: |
+        az ml data create \
+          --name $DATA_ASSET_NAME \
+          --path $DATA_FILE \
+          --type uri_file \
+          --description "Dataset for preprocessing" \
+          --datastore-name $DATASTORE_NAME
 
-      # Stage 2: Submit Azure ML Job
-      - name: Submit Azure ML job
-        run: |
-          az ml job create --file job.yml \
-            --workspace-name Project-WS \
-            --resource-group Project-G
+    - name: Get Data Asset URI
+      id: get-data-uri
+      run: |
+        DATA_ASSET_URI=$(az ml data show --name "preprocessed-dataset" --query "uri" -o tsv)
+        echo "DATA_ASSET_URI=$DATA_ASSET_URI" >> $GITHUB_ENV
 
-      # Stage 3: Query Azure ML Data
-      - name: Query Azure ML data asset
-        run: |
-          az ml data list --workspace-name Project-WS \
-            --resource-group Project-G \
-            --output table
+    - name: Debug URI
+      run: echo "Data Asset URI - ${{ env.DATA_ASSET_URI }}"
+
 
