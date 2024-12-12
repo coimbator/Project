@@ -39,7 +39,7 @@ jobs:
     - name: Get Data Asset URI
       id: get-data-uri
       run: |
-        DATA_ASSET_URI=$(az ml data show --name "HAR-dataset" --workspace-name Project-WS --resource-group Project-G --query "uri" -o tsv)
+        DATA_ASSET_URI=$(az ml data show --name "HAR-dataset" --version 1 --workspace-name Project-WS --resource-group Project-G --query "uri" -o tsv)
         echo "DATA_ASSET_URI=$DATA_ASSET_URI" >> $GITHUB_ENV
 
     - name: Debug URI
