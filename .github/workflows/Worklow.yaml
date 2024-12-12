@@ -32,6 +32,8 @@ jobs:
           --name $DATA_ASSET_NAME \
           --path $DATA_FILE \
           --type uri_file \
+          --workspace-name Project-WS \
+          --resource-group Project-G \
           --description "Dataset for preprocessing" \
 
     - name: Get Data Asset URI
