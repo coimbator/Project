@@ -26,7 +26,6 @@ jobs:
     - name: Create AzureML Data Asset
       env:
         DATA_FILE: "HAR.csv"  # Path to your dataset in the repository
-        DATASTORE_NAME: "workspaceblobstore"  # Name of your Azure datastore
         DATA_ASSET_NAME: "HAR-dataset"  # Desired name of your data asset
       run: |
         az ml data create \
@@ -34,7 +33,6 @@ jobs:
           --path $DATA_FILE \
           --type uri_file \
           --description "Dataset for preprocessing" \
-          --datastore-name $DATASTORE_NAME
 
     - name: Get Data Asset URI
       id: get-data-uri
