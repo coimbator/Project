@@ -4,6 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report
+from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 import mlflow
 
@@ -15,54 +16,28 @@ mlflow.autolog()
 df = pd.read_csv(args.trainingdata)
 print(df)
 
-def filter_columns(data):
-    # Exclude the label column and use all other columns as inputs
-    X = data.drop(columns=['Activity', 'subject']).values  # Drops the 'type' column
-    return X
-
-# Assuming df is your DataFrame
-X = filter_columns(df)
+X = df.drop(columns=['Activity', 'subject']).values  # Drops the Activity and Subject column
 Y = df['Activity'].values  # Extract the label column
 
 # Check the number of rows
 print(f"Number of rows: {len(X)}")
 
-#Split the data and keep 20% back for testing later
-X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.20)
-print("Train length", len(X_train))
-print("Test length", len(X_test))
+scaler = StandardScaler()
+X = scaler.fit_transform(X)
 
-models = [
-    (
-        "Random Forest",
-        RandomForestClassifier(n_estimators=100, random_state=42),
-        (X_train, Y_train),
-        (X_test, Y_test)
-    ),
-    (
-        "Logistic Regression",
-        LogisticRegression(),
-        (X_train, Y_train),
-        (X_test, Y_test)
-    ),
-    (
-        "SVM",
-        SVC(kernel='rbf', C=1.0, gamma='scale', random_state=42),
-        (X_train, Y_train),
-        (X_test, Y_test)
-    )
-]
+# Split data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-reports = []
+# Initialize the Random Forest classifier
+clf = RandomForestClassifier(n_estimators=100, random_state=42)
 
-for model_name, model, train_set, test_set in models:
-    X_train = train_set[0]
-    Y_train = train_set[1]
-    X_test = test_set[0]
-    Y_test = test_set[1]
+# Train the model
+clf.fit(X_train, y_train)
 
-    model.fit(X_train, Y_train)
-    y_pred = model.predict(X_test)
-    report = classification_report(Y_test, y_pred, output_dict=True)
-    reports.append(report)
-    print(reports)
+# Make predictions
+y_pred = clf.predict(X_test)
+
+# Generate the classification report
+report = classification_report(y_test, y_pred)
+print("Classification Report:")
+print(report)

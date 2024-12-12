@@ -3,7 +3,7 @@ run-name: ${{ github.actor }} workflow with shared Azure login
 on: [push]
 
 jobs:
-  multiStageJob:
+  DataIngestJob:
     runs-on: ubuntu-latest
     steps:
       # Checkout the repository
