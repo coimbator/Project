@@ -25,9 +25,9 @@ jobs:
 
     - name: Create AzureML Data Asset
       env:
-        DATA_FILE: "data/your_dataset.csv"  # Path to your dataset in the repository
+        DATA_FILE: "HAR.csv"  # Path to your dataset in the repository
         DATASTORE_NAME: "workspaceblobstore"  # Name of your Azure datastore
-        DATA_ASSET_NAME: "preprocessed-dataset"  # Desired name of your data asset
+        DATA_ASSET_NAME: "HAR-dataset"  # Desired name of your data asset
       run: |
         az ml data create \
           --name $DATA_ASSET_NAME \
@@ -39,7 +39,7 @@ jobs:
     - name: Get Data Asset URI
       id: get-data-uri
       run: |
-        DATA_ASSET_URI=$(az ml data show --name "preprocessed-dataset" --query "uri" -o tsv)
+        DATA_ASSET_URI=$(az ml data show --name "HAR-dataset" --query "uri" -o tsv)
         echo "DATA_ASSET_URI=$DATA_ASSET_URI" >> $GITHUB_ENV
 
     - name: Debug URI
