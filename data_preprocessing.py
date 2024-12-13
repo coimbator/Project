@@ -1,4 +1,6 @@
 import pandas as pd
+import os
+import subprocess
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.model_selection import train_test_split
 
@@ -36,16 +38,33 @@ standardized_test_features_path = 'standardized_test_features.csv'
 train_target_path = 'train_target.csv'
 test_target_path = 'test_target.csv'
 
+output_folder="data/"
+# Step 3: Save the preprocessed dataset
+output_file1 = os.path.join(output_folder, "standardized_train_features.csv")
 pd.DataFrame(X_train).to_csv(standardized_train_features_path, index=False)
+
+output_file2 = os.path.join(output_folder, "standardized_test_features.csv")
 pd.DataFrame(X_test).to_csv(standardized_test_features_path, index=False)
+
+output_file3 = os.path.join(output_folder, "train_target.csv")
 pd.DataFrame(y_train).to_csv(train_target_path, index=False, header=['Activity'])
+
+output_file4 = os.path.join(output_folder, "test_target.csv")
 pd.DataFrame(y_test).to_csv(test_target_path, index=False, header=['Activity'])
 
-# Save files back to the repository
-import os
-os.system(f"git add {cleaned_file_path} {standardized_train_features_path} {standardized_test_features_path} {train_target_path} {test_target_path}")
-os.system('git commit -m "Add preprocessed, split, and standardized data files"')
-os.system('git push')
+print("Data preprocessing completed successfully.")
+
+    # Step 4: Push to GitHub
+print("Pushing preprocessed data to GitHub...")
+commands = [
+    "git add .",
+    f"git commit -m 'Added preprocessed data'",
+    "git push"
+    ]
+for command in commands:
+    result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    print(result.stdout.decode().strip())
+
 
 print("Data preprocessing completed. Files saved and pushed to the repository:")
 print(f"- Cleaned dataset: {cleaned_file_path}")
