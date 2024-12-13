@@ -175,18 +175,18 @@ jobs:
     # Build and containerize the model
     - name: Build Docker image
       run: |
-        docker build -t myusername/RFModel:latest .  # Change with your Docker image name
+        docker build -t myusername/rfmodel:latest .  
 
     # Push the Docker image to Docker Hub or GitHub Container Registry
     - name: Push Docker image to registry
       run: |
-        docker push myusername/RFModel:latest  # Push the image to your registry
+        docker push myusername/rfmodel:latest  # Push the image to your registry
     
     # Register the model to Azure ML
     - name: Register the model to Azure ML
       run: |
-        az ml model register --name RFModel --path myusername/RFModel:latest --resource-group Project-G --workspace-name Project-WS
+        az ml model register --name rfmodel --path myusername/rfmodel:latest --resource-group Project-G --workspace-name Project-WS
 
     # Deploy the model to Azure ML
     - name: Deploy the model to Azure ML
-      run: az ml model deploy --name RFModel-deployment --model RFModel --resource-group Project-G --workspace-name Project-WS --compute-target MLops
+      run: az ml model deploy --name rfmodel-deployment --model rfmodel --resource-group Project-G --workspace-name Project-WS --compute-target MLops
