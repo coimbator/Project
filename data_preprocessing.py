@@ -57,6 +57,7 @@ print("Data preprocessing completed successfully.")
     # Step 4: Push to GitHub
 print("Pushing preprocessed data to GitHub...")
 commands = [
+    "git clone https://github.com/coimbator/Project.git"
     "git add .",
     f"git commit -m 'Added preprocessed data'",
     "git push"
