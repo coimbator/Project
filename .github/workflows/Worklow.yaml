@@ -66,4 +66,32 @@ jobs:
         DATA_ASSET_URI: ${{ env.DATA_ASSET_URI }}
       run: |
         python data_preprocessing.py
+  model-training:
+    needs: data-preprocessing
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
+
+    - name: Install dependencies
+      run: |
+        pip install azureml-sdk scikit-learn mlflow
+
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Train Model
+      run: |
+        # Set the workspace
+        az ml workspace set --name Project-WS --resource-group Project-G
+
+        # Submit the training job
+        az ml job create --file train_model_job.yml
 
