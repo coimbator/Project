@@ -14,7 +14,7 @@ inputs:
     path: azureml:standardized_test_features:1  # Path to the first testing dataset
   testing_data2:
     type: uri_file
-    path: azureml:Htest_targetAR:1  # Path to the second testing dataset
+    path: azureml:test_target:1  # Path to the second testing dataset
 
 environment: azureml://registries/azureml/environments/sklearn-1.5/versions/14  # Predefined environment
 
