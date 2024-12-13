@@ -137,11 +137,11 @@ jobs:
     - name: Setup Python
       uses: actions/setup-python@v4
       with:
-        python-version: 3.8
+        python-version: 3.11
 
     - name: Install dependencies
       run: |
-        pip install pandas scikit-learn azureml-core pickle unittest
+        pip install pandas scikit-learn azureml-core unittest
 
     - name: Run Integration Tests
       run: |
