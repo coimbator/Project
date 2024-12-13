@@ -91,10 +91,7 @@ jobs:
       run: |
         curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
         az extension add --name ml -y
-        
-        # Set the workspace
-        az ml workspace set --name Project-WS --resource-group Project-G
 
         # Submit the training job
-        az ml job create --file train_model_job.yml
+        az ml job create --file job.yml --web --resource-group Project-G --workspace-name Project-WS
 
