@@ -13,7 +13,7 @@ COPY RandomForest /RandomForest
 
 # Install the model requirements
 COPY requirements.txt /RandomForest/requirements.txt
-RUN pip install -r /example/requirements.txt
+RUN pip install -r /RandomForest/requirements.txt
 
 # Tell it how to run the model
 CMD ["mlflow", "models", "serve", "-h", "0.0.0.0", "-m", "RandomForest", "--env-manager=local"]
