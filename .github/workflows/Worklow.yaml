@@ -102,7 +102,7 @@ jobs:
 
         az ml data create \
           --name standardized_test_features \
-          --path data/standardized_train_features.csv \
+          --path data/standardized_test_features.csv \
           --type uri_file \
           --workspace-name Project-WS \
           --resource-group Project-G \
