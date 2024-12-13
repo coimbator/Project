@@ -20,7 +20,7 @@ if 'Activity' in data.columns:
     label_encoders['Activity'] = le
 
 # Save the cleaned data to a new CSV file
-cleaned_file_path = 'data/cleaned_dataset.csv'
+cleaned_file_path = 'data\cleaned_dataset.csv'
 data.to_csv(cleaned_file_path, index=False)
 
 # Standardize the dataset
@@ -33,10 +33,10 @@ y = data['Activity'].values
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Save the standardized features and target to separate files
-standardized_train_features_path = 'standardized_train_features.csv'
-standardized_test_features_path = 'standardized_test_features.csv'
-train_target_path = 'train_target.csv'
-test_target_path = 'test_target.csv'
+standardized_train_features_path = 'data/standardized_train_features.csv'
+standardized_test_features_path = 'data/standardized_test_features.csv'
+train_target_path = 'data/train_target.csv'
+test_target_path = 'data/test_target.csv'
 
 output_folder="data/"
 # Step 3: Save the preprocessed dataset

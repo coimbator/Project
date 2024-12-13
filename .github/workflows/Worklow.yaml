@@ -66,11 +66,4 @@ jobs:
         DATA_ASSET_URI: ${{ env.DATA_ASSET_URI }}
       run: |
         python data_preprocessing.py
-    - name: Commit and push changes
-      run: |
-        git config user.name "GitHub Actions"
-        git config user.email "actions@github.com"
-        git add cleaned_dataset.csv standardized_train_features.csv standardized_test_features.csv train_target.csv test_target.csv
-        git commit -m "Add preprocessed, split, and standardized data files"
-        git push
 
