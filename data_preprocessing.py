@@ -1,5 +1,6 @@
 import pandas as pd
 from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.model_selection import train_test_split
 
 # Load your dataset
 file_path = 'data/HAR.csv'  # Replace with the path to your CSV file
@@ -24,24 +25,31 @@ data.to_csv(cleaned_file_path, index=False)
 scaler = StandardScaler()
 X = data.drop(columns=['Activity']).values
 X = scaler.fit_transform(X)
+y = data['activity'].values
+
+# Split the dataset into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Save the standardized features and target to separate files
-standardized_features_path = 'data/standardized_features.csv'
-pd.DataFrame(X).to_csv(standardized_features_path, index=False)
-target_path = 'data/target.csv'
-data['Activity'].to_csv(target_path, index=False)
+standardized_train_features_path = 'standardized_train_features.csv'
+standardized_test_features_path = 'standardized_test_features.csv'
+train_target_path = 'train_target.csv'
+test_target_path = 'test_target.csv'
 
-print("Data preprocessing completed. Files saved:")
-print("- Cleaned dataset: cleaned_dataset.csv")
-print("- Standardized features: standardized_features.csv")
-print("- Target: target.csv")
+pd.DataFrame(X_train).to_csv(standardized_train_features_path, index=False)
+pd.DataFrame(X_test).to_csv(standardized_test_features_path, index=False)
+pd.DataFrame(y_train).to_csv(train_target_path, index=False, header=['activity'])
+pd.DataFrame(y_test).to_csv(test_target_path, index=False, header=['activity'])
 
+# Save files back to the repository
 import os
-os.system(f"git add {cleaned_file_path} {standardized_features_path} {target_path}")
-os.system('git commit -m "Add preprocessed and standardized data files"')
+os.system(f"git add {cleaned_file_path} {standardized_train_features_path} {standardized_test_features_path} {train_target_path} {test_target_path}")
+os.system('git commit -m "Add preprocessed, split, and standardized data files"')
 os.system('git push')
 
 print("Data preprocessing completed. Files saved and pushed to the repository:")
 print(f"- Cleaned dataset: {cleaned_file_path}")
-print(f"- Standardized features: {standardized_features_path}")
-print(f"- Target: {target_path}")
+print(f"- Standardized train features: {standardized_train_features_path}")
+print(f"- Standardized test features: {standardized_test_features_path}")
+print(f"- Train target: {train_target_path}")
+print(f"- Test target: {test_target_path}")
