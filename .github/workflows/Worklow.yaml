@@ -46,7 +46,7 @@ jobs:
       run: echo "Data Asset URI - ${{ env.DATA_ASSET_URI }}"
   
   preprocessing:
-    needs: data-ingestion
+    needs: data-uploading
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
@@ -67,7 +67,7 @@ jobs:
       run: |
         python data_preprocessing.py
   train_model:
-    needs: data-preprocessing
+    needs: preprocessing
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
@@ -128,7 +128,7 @@ jobs:
         az ml job create --file job.yml --web --resource-group Project-G --workspace-name Project-WS
 
   unit_and_integration_testing:
-    needs: model-training
+    needs: train_model
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
@@ -148,7 +148,7 @@ jobs:
         python integrate_test.py
 
   register_and_Deploy:
-    needs: Testing
+    needs: unit_and_integration_testing
     runs-on: ubuntu-latest
 
     steps:
