@@ -127,3 +127,22 @@ jobs:
         # Submit the training job
         az ml job create --file job.yml --web --resource-group Project-G --workspace-name Project-WS
 
+  unit-testing:
+    needs: model-training
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
+
+    - name: Install dependencies
+      run: |
+        pip install pytest pandas scikit-learn azureml-core
+
+    - name: Run Unit Tests
+      run: |
+        pytest unit_test.py
