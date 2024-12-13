@@ -89,6 +89,7 @@ jobs:
 
     - name: Train Model
       run: |
+        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
         az extension add --name ml -y
         
         # Set the workspace
