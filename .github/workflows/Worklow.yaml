@@ -92,6 +92,38 @@ jobs:
         curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
         az extension add --name ml -y
 
+        az ml data create \
+          --name standardized_train_features \
+          --path data/standardized_train_features.csv \
+          --type uri_file \
+          --workspace-name Project-WS \
+          --resource-group Project-G \
+          --description "Dataset for Training" \
+
+        az ml data create \
+          --name standardized_test_features \
+          --path data/standardized_train_features.csv \
+          --type uri_file \
+          --workspace-name Project-WS \
+          --resource-group Project-G \
+          --description "Dataset for Testing" \
+
+        az ml data create \
+          --name test_target \
+          --path data.test_target.csv \
+          --type uri_file \
+          --workspace-name Project-WS \
+          --resource-group Project-G \
+          --description "Dataset for Testing" \
+
+        az ml data create \
+          --name train_target \
+          --path data/train_target \
+          --type uri_file \
+          --workspace-name Project-WS \
+          --resource-group Project-G \
+          --description "Dataset for Training" \
+        
         # Submit the training job
         az ml job create --file job.yml --web --resource-group Project-G --workspace-name Project-WS
 

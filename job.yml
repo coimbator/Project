@@ -1,7 +1,24 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
 command: |
-  python train_model.py
-environment: azureml://registries/azureml/environments/sklearn-1.5/versions/14
-compute: MLops
-experiment_name: HAR_Experiment
-description: Project HAR
+  python train_model.py --trainingdata1 ${{ inputs.training_data1 }} --trainingdata2 ${{ inputs.training_data2 }} --testingdata1 ${{ inputs.testing_data1 }} --testingdata2 ${{ inputs.testing_data2 }}
+
+inputs:
+  training_data1:
+    type: uri_file
+    path: azureml:standardized_train_features:1  # Path to the first training dataset
+  training_data2:
+    type: uri_file
+    path: azureml:train_target:1  # Path to the second training dataset
+  testing_data1:
+    type: uri_file
+    path: azureml:standardized_test_features:1  # Path to the first testing dataset
+  testing_data2:
+    type: uri_file
+    path: azureml:Htest_targetAR:1  # Path to the second testing dataset
+
+environment: azureml://registries/azureml/environments/sklearn-1.5/versions/14  # Predefined environment
+
+compute: MLops  # Compute target for the job (make sure MLops is defined)
+
+experiment_name: HAR_Experiment  # The experiment name for Azure ML job
+description: Project HAR  # A brief description of your project
