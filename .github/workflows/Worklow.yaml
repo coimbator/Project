@@ -141,7 +141,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install pytest pandas scikit-learn azureml-core
+        pip install pandas scikit-learn azureml-core pickle
 
     - name: Run Integration Tests
       run: |
