@@ -1,6 +1,6 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
 command: |
-  python train_model.py --trainingdata1 ${{ inputs.training_data1 }} --trainingdata2 ${{ inputs.training_data2 }} --testingdata1 ${{ inputs.testing_data1 }} --testingdata2 ${{ inputs.testing_data2 }}
+  python Train_model.py --trainingdata1 ${{ inputs.training_data1 }} --trainingdata2 ${{ inputs.training_data2 }} --testingdata1 ${{ inputs.testing_data1 }} --testingdata2 ${{ inputs.testing_data2 }}
 
 inputs:
   training_data1:
