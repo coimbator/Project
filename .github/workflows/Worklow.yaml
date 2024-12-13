@@ -118,7 +118,7 @@ jobs:
 
         az ml data create \
           --name train_target \
-          --path data/train_target \
+          --path data/train_target.csv \
           --type uri_file \
           --workspace-name Project-WS \
           --resource-group Project-G \
