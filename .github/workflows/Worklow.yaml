@@ -127,7 +127,7 @@ jobs:
         # Submit the training job
         az ml job create --file job.yml --web --resource-group Project-G --workspace-name Project-WS
 
-  unit-testing:
+  Integration-testing:
     needs: model-training
     runs-on: ubuntu-latest
     steps:
@@ -143,6 +143,6 @@ jobs:
       run: |
         pip install pytest pandas scikit-learn azureml-core
 
-    - name: Run Unit Tests
+    - name: Run Integration Tests
       run: |
-        pytest unit_test.py
+        pytest integrate_test.py
