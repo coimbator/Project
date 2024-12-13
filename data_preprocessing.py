@@ -54,18 +54,6 @@ pd.DataFrame(y_test).to_csv(test_target_path, index=False, header=['Activity'])
 
 print("Data preprocessing completed successfully.")
 
-    # Step 4: Push to GitHub
-print("Pushing preprocessed data to GitHub...")
-commands = [
-    "git clone https://github.com/coimbator/Project.git"
-    "git add .",
-    f"git commit -m 'Added preprocessed data'",
-    "git push"
-    ]
-for command in commands:
-    result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    print(result.stdout.decode().strip())
-
 
 print("Data preprocessing completed. Files saved and pushed to the repository:")
 print(f"- Cleaned dataset: {cleaned_file_path}")
