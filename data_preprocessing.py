@@ -25,7 +25,7 @@ data.to_csv(cleaned_file_path, index=False)
 scaler = StandardScaler()
 X = data.drop(columns=['Activity']).values
 X = scaler.fit_transform(X)
-y = data['activity'].values
+y = data['Activity'].values
 
 # Split the dataset into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -38,8 +38,8 @@ test_target_path = 'test_target.csv'
 
 pd.DataFrame(X_train).to_csv(standardized_train_features_path, index=False)
 pd.DataFrame(X_test).to_csv(standardized_test_features_path, index=False)
-pd.DataFrame(y_train).to_csv(train_target_path, index=False, header=['activity'])
-pd.DataFrame(y_test).to_csv(test_target_path, index=False, header=['activity'])
+pd.DataFrame(y_train).to_csv(train_target_path, index=False, header=['Activity'])
+pd.DataFrame(y_test).to_csv(test_target_path, index=False, header=['Activity'])
 
 # Save files back to the repository
 import os
