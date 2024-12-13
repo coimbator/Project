@@ -89,6 +89,8 @@ jobs:
 
     - name: Train Model
       run: |
+        az extension add --name ml -y
+        
         # Set the workspace
         az ml workspace set --name Project-WS --resource-group Project-G
 
