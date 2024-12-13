@@ -110,7 +110,7 @@ jobs:
 
         az ml data create \
           --name test_target \
-          --path data.test_target.csv \
+          --path data/test_target.csv \
           --type uri_file \
           --workspace-name Project-WS \
           --resource-group Project-G \
