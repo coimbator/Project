@@ -5,7 +5,7 @@ import mlflow
 import argparse
 import pickle
 
-'''parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser()
 parser.add_argument("--trainingdata1", type=str, required=True, help='Dataset for training')
 parser.add_argument("--trainingdata2", type=str, required=True, help='Dataset for training')
 parser.add_argument("--testingdata1", type=str, required=True, help='Dataset for testing')
@@ -16,12 +16,7 @@ mlflow.autolog()
 X_train= pd.read_csv(args.trainingdata1).values
 y_train = pd.read_csv(args.trainingdata2).values.ravel()
 X_test= pd.read_csv(args.testingdata1).values
-y_test= pd.read_csv(args.testingdata2).values.ravel()'''
-
-X_train= pd.read_csv('data/standardized_train_features.csv').values
-y_train = pd.read_csv('data/train_target.csv').values.ravel()
-X_test= pd.read_csv('data/standardized_test_features.csv').values
-y_test= pd.read_csv('data/test_target.csv').values.ravel()
+y_test= pd.read_csv(args.testingdata2).values.ravel()
 
 # Initialize the Random Forest classifier
 clf = RandomForestClassifier(n_estimators=100, random_state=42)

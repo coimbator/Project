@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y gcc
 RUN python -m pip install --upgrade pip && pip install virtualenv
 
 # Copy in our model
-COPY example /example
+COPY example /RandomForest
 
 # Install the model requirements
 RUN pip install -r /example/requirements.txt
