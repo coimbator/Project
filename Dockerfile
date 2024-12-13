@@ -12,7 +12,6 @@ RUN python -m pip install --upgrade pip && pip install virtualenv
 COPY RandomForest /RandomForest
 
 # Install the model requirements
-COPY requirements.txt /RandomForest/requirements.txt
 RUN pip install -r /RandomForest/requirements.txt
 
 # Tell it how to run the model
