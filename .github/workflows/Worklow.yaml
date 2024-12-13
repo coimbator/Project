@@ -127,7 +127,7 @@ jobs:
         # Submit the training job
         az ml job create --file job.yml --web --resource-group Project-G --workspace-name Project-WS
 
-  Integration-testing:
+  Testing:
     needs: model-training
     runs-on: ubuntu-latest
     steps:
@@ -148,6 +148,7 @@ jobs:
         python integrate_test.py
 
   containerize_and_register:
+    needs: Testing
     runs-on: ubuntu-latest
 
     steps:
