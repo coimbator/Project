@@ -147,7 +147,7 @@ jobs:
       run: |
         python integrate_test.py
 
-  containerize_and_register:
+  Containerize_and_Deploy:
     needs: Testing
     runs-on: ubuntu-latest
 
@@ -155,6 +155,11 @@ jobs:
     # Checkout the repository code
     - name: Checkout repository
       uses: actions/checkout@v3
+
+    - name: Log in to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     # Set up Docker
     - name: Set up Docker Buildx
@@ -170,9 +175,18 @@ jobs:
     # Build and containerize the model
     - name: Build Docker image
       run: |
-        docker build -t myusername/my-model:latest .  # Change with your Docker image name
+        docker build -t myusername/RFModel:latest .  # Change with your Docker image name
 
     # Push the Docker image to Docker Hub or GitHub Container Registry
     - name: Push Docker image to registry
       run: |
-        docker push myusername/my-model:latest  # Push the image to your registry
+        docker push myusername/RFModel:latest  # Push the image to your registry
+    
+    # Register the model to Azure ML
+    - name: Register the model to Azure ML
+      run: |
+        az ml model register --name RFModel --path myusername/RFModel:latest --resource-group Project-G --workspace-name Project-WS
+
+    # Deploy the model to Azure ML
+    - name: Deploy the model to Azure ML
+      run: az ml model deploy --name RFModel-deployment --model RFModel --resource-group Project-G --workspace-name Project-WS --compute-target MLops

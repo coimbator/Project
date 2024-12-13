@@ -9,10 +9,10 @@ RUN apt-get update && apt-get install -y gcc
 RUN python -m pip install --upgrade pip && pip install virtualenv
 
 # Copy in our model
-COPY example /RandomForest
+COPY RandomForest /RandomForest
 
 # Install the model requirements
 RUN pip install -r /example/requirements.txt
 
 # Tell it how to run the model
-CMD ["mlflow", "models", "serve", "-h", "0.0.0.0", "-m", "example", "--env-manager=local"]
+CMD ["mlflow", "models", "serve", "-h", "0.0.0.0", "-m", "RandomForest", "--env-manager=local"]
